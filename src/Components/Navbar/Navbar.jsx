@@ -18,8 +18,8 @@ const theme = createTheme({
             defaultProps: {
                 style: {
                     borderRadius: 32,
-                    width: 138,
-                    textTransform: 'none'
+                    textTransform: 'none',
+                    width: '100%',
                 }
             }
         }
