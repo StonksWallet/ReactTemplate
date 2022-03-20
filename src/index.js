@@ -7,6 +7,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 import Home from "./Pages/Home";
+import Account from "./Pages/Account";
 import Login from "./Pages/Login/Login.jsx";
 import PrivateRoute from "./Components/PrivateRoute";
 
@@ -14,6 +15,7 @@ ReactDOM.render(
     <BrowserRouter>
         <Switch>
             <PrivateRoute exact={true} path="/" component={Home} />
+            <PrivateRoute exact={true} path="/account" component={Account} />
             <Route path='/login' component={Login} />
             {/*<Route component={NotFound} />*/}
         </Switch>
