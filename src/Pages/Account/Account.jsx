@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import React from "react";
 import "./style.css";
-import Navbar from "../../Components/Navbar"
 import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
 
@@ -11,7 +10,6 @@ const Account = ({ removeAccount }) => {
     }
     return (
         <React.Fragment>
-            <Navbar />
             <div className="account-bg">
                 <div className="account-title">
                     Minha Conta

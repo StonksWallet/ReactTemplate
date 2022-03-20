@@ -1,77 +1,52 @@
 import React from "react";
 import "./style.css";
 import Button from "@mui/material/Button"
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from '@mui/material/Link';
-
-const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#545D69',
-      },
-      secondary: {
-        main: '#5D5FEF',
-      },
-    },
-    components: {
-        MuiButtonBase: {
-            defaultProps: {
-                style: {
-                    borderRadius: 32,
-                    textTransform: 'none',
-                    width: '100%',
-                }
-            }
-        }
-    }
-});
 
 const navUser = [
     {
         name: "Insights",
         route: "/insights",
-        color: "primary"
+        color: "light-gray"
     },
     {
         name: "Ativos",
         route: "/assets",
-        color: "primary"
+        color: "light-gray"
     },
     {
         name: "Conta",
         route: "/account",
-        color: "primary"
+        color: "light-gray"
     },
     {
         name: "Sair",
         route: "/logout",
-        color: "secondary"
+        color: "purple"
     },
 ]
 
 const Navbar = () => {
     return (
-        <ThemeProvider theme={theme}>
-            <div className="navbar">
-                <span className="navbar-title">
-                    Stonks Wallet
-                </span>
-                <ul className="navbar-btn-list">
-                    {navUser.map(btn =>  (
-                        <li key={btn.name} className="navbar-btn">
-                            <Button 
-                                variant="contained" 
-                                color={btn.color}
-                            >
-                                <Link href={btn.route} underline="none" color="white">
-                                    {btn.name}
-                                </Link>
-                            </Button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </ThemeProvider>
+        <div className="navbar">
+            <span className="navbar-title">
+                Stonks Wallet
+            </span>
+            <ul className="navbar-btn-list">
+                {navUser.map(btn =>  (
+                    <li key={btn.name} className="navbar-btn">
+                        <Button 
+                            variant="contained" 
+                            color={btn.color}
+                        >
+                            <Link href={btn.route} underline="none" color="white">
+                                {btn.name}
+                            </Link>
+                        </Button>
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
 }
 
