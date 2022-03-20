@@ -24,7 +24,8 @@ async function createUser(name, email, password) {
 }
 
 async function getUser() {
-    await getRequest(apiUrl + "user");
+    const user = await getRequest(apiUrl + "user");
+    return user;
 }
 
 export const userApi = {
