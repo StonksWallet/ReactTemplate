@@ -3,23 +3,54 @@ import ReactDOM from 'react-dom';
 import './assets/index.css';
 import './assets/config.css';
 
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Switch} from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 import Home from "./Pages/Home";
 import Account from "./Pages/Account";
-import Login from "./Pages/Login/Login.jsx";
+import Login from "./Pages/Login";
 import PrivateRoute from "./Components/PrivateRoute";
+import Navbar from "./Components/Navbar";
+import Theme from "./assets/theme"
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+
+const routes = [
+    {
+        path: "/",
+        exact: true,
+        component: Home,
+    },
+    {
+        path: "/account",
+        exact: true,
+        component: Account,
+    },
+    {
+        path: "/login",
+        exact: true,
+        component: Login,
+    },
+]
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Switch>
-            <PrivateRoute exact={true} path="/" component={Home} />
-            <PrivateRoute exact={true} path="/account" component={Account} />
-            <Route path='/login' component={Login} />
-            {/*<Route component={NotFound} />*/}
-        </Switch>
-    </BrowserRouter>
+    <ThemeProvider theme={Theme} >
+        <BrowserRouter>
+            <Navbar route="/"/>
+            <div style={{ marginTop: '100px', height: '100%' }}>
+                <Switch>
+                    {routes.map((route, index) => (
+                        <PrivateRoute
+                            key={index}
+                            path={route.path}
+                            exact={route.exact}
+                            component={route.component}
+                        />
+                    ))}
+                    {/* 404? */}
+                </Switch>
+            </div>
+        </BrowserRouter>
+    </ThemeProvider>
     , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
