@@ -13,6 +13,7 @@ import PrivateRoute from "./Components/PrivateRoute";
 import Navbar from "./Components/Navbar";
 import Theme from "./assets/theme"
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import Logout from './Pages/Logout';
 
 const routes = [
     {
@@ -30,6 +31,11 @@ const routes = [
         exact: true,
         component: Login,
     },
+    {
+        path: "/logout",
+        exact: true,
+        component: Logout
+    }
 ]
 
 ReactDOM.render(
