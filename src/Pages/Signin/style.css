@@ -7,7 +7,7 @@
     overflow: hidden;
 }
 
-.login-title {
+.signin-title {
     font-size: 40px;
     font-weight: 700;
     left: 5%;
@@ -15,6 +15,6 @@
     color: white;
 }
 
-.login-body {
+.signin-body {
     color: white;
 }

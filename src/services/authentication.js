@@ -2,6 +2,10 @@ import {userApi} from "../api/userApi.js";
 
 const tokenKey = 'tokenKey';
 
+export const signin = async (name, lastName, email, password) => {
+    await userApi.signin(name, lastName, email, password);
+}
+
 export const login = async (email, password) => {
     const token = await userApi.login(email, password);
     localStorage.setItem(tokenKey, token);

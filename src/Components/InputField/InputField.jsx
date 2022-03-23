@@ -1,17 +1,25 @@
 import React from "react";
+import TextField from '@mui/material/TextField';
 import "./style.css";
 
-function InputField({type, placeholder, value, setValue}) {
+function InputField({ value, onChange, color, id, label, name, variant, style, ...rest }) {
     return (
-        <input
-            className={'inputField'}
-            type={type}
-            placeholder={placeholder}
-            onChange={(event) => {
-                setValue(event.target.value);
-            }}
+        <TextField 
+            {...rest}
             value={value}
-            required={true}
+            onChange={onChange}
+            style={{
+                borderRadius: 8,
+                width: '100%',
+                marginTop: '20px',
+                backgroundColor: '#ffffff',
+                ...style,
+            }}
+            color={color}
+            id={id}
+            label={label}
+            name={name}
+            variant={variant}
         />
     );
 }

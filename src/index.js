@@ -13,6 +13,7 @@ import PrivateRoute from "./Components/PrivateRoute";
 import Theme from "./assets/theme"
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Logout from './Pages/Logout';
+import Signin from './Pages/Signin';
 import {Route} from "react-router-dom";
 
 const privateRoutes = [
@@ -38,6 +39,11 @@ const publicRoutes = [
         path: "/login",
         exact: true,
         component: Login,
+    },
+    {
+        path: "/signin",
+        exact: true,
+        component: Signin,
     },
 ]
 
