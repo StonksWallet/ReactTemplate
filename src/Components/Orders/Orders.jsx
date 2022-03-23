@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./style.css";
 import { Paper } from "@mui/material";
 
-const Operations = ({ operations }) => {
+const Orders = ({ orders }) => {
     return (
         <React.Fragment>
-            <Paper className="operations-bg">
-                <p className="operations-title">Operações</p>
+            <Paper className="orders-bg">
+                <p className="orders-title">Operações</p>
             </Paper>
         </React.Fragment>
     )
 }
 
-export default Operations
+export default Orders

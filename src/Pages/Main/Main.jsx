@@ -5,7 +5,7 @@ import { navUser } from "../../assets/navLists"
 import { verifyLogin } from "../../services/authentication"
 import RentabilityGraph from "../../Components/RentabilityGraph"
 import AssetsList from "../../Components/AssetsList/AssetsList";
-import Operations from "../../Components/Operations/Operations";
+import Orders from "../../Components/Orders/Orders";
 
 const Main = () => {
     const appliedValue = 10000
@@ -32,6 +32,23 @@ const Main = () => {
         },
     ]
 
+    const orders = [
+        {
+            name: "Bitcoin",
+            symbol: "BTC",
+            type: "buy",
+            price: 41000,
+            quantity: 0.001,
+        },
+        {
+            name: "Ethereum",
+            symbol: "ETH",
+            type: "sell",
+            price: 3000,
+            quantity: 0.01,
+        }
+    ]
+
     return (
         <React.Fragment>
             <Navbar navList={navUser} />
@@ -52,7 +69,7 @@ const Main = () => {
                 </div>
                 <RentabilityGraph title="Rentabilidade Histórica" />
                 <AssetsList title="Meus Ativos" assets={myAssets} />
-                <Operations />
+                <Orders orders={orders}/>
             </div>
         </React.Fragment>
     )

@@ -21,6 +21,7 @@ const AssetsList = ({ title, assets }) => {
                                     backgroundColor: '#E8E8E8',
                                     marginTop: 2,
                                 }}
+                                className="assets-item"
                             >
                                 <span className="assets-name">{asset.name} ({asset.symbol})</span>
                                 <div className="assets-values">
