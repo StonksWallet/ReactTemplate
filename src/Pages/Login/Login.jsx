@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { login, verifyLogin } from "../../services/authentication"
 import { Redirect } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
+import { navGuest } from "../../assets/navLists"
 
 const styles = {
     mainPaper: {
@@ -69,7 +70,7 @@ class Login extends React.Component {
                 {this.state.logged &&
                     <Redirect to="/" />
                 }
-                <Navbar route="/"/>
+                <Navbar navList={navGuest} />
                 <div className="image-bg">
                     <Paper style={styles.mainPaper}>
                         <div style={{ paddingBottom: '20px' }}>

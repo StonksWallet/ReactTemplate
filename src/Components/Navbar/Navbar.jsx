@@ -2,54 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import Button from "@mui/material/Button"
 import Link from '@mui/material/Link';
-import { verifyLogin } from "../../services/authentication"
 
-const navUser = [
-    {
-        name: "Insights",
-        route: "/insights",
-        color: "light-gray"
-    },
-    {
-        name: "Ativos",
-        route: "/assets",
-        color: "light-gray"
-    },
-    {
-        name: "Conta",
-        route: "/account",
-        color: "light-gray"
-    },
-    {
-        name: "Sair",
-        route: "/logout",
-        color: "purple"
-    },
-]
-
-const navGuest = [
-    {
-        name: "Cadastre",
-        route: "/signin",
-        color: "light-gray"
-    },
-    {
-        name: "Entrar",
-        route: "/login",
-        color: "purple"
-    }
-]
-
-const Navbar = () => {
-
-    const [ logged, _ ] = useState(() => {
-        return verifyLogin()
-    })
-    const [ navList, setNavList ] = useState([])
-    
-    useEffect(() => {
-        setNavList(logged ? navUser : navGuest)
-    }, [logged])
+const Navbar = ({ navList }) => {
 
     return (
         <div className="navbar">
@@ -57,7 +11,7 @@ const Navbar = () => {
                 Stonks Wallet
             </span>
             <ul className="navbar-btn-list">
-                {navList.map(btn =>  (
+                {(navList.map(btn =>  (
                     <li key={btn.name} className="navbar-btn">
                         <Link href={btn.route} underline="none" color="white">
                             <Button 
@@ -68,7 +22,7 @@ const Navbar = () => {
                             </Button>
                         </Link>
                     </li>
-                ))}
+                )))}
             </ul>
         </div>
     )

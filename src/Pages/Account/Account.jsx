@@ -3,6 +3,7 @@ import "./style.css";
 import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
 import Navbar from "../../Components/Navbar";
+import { navUser } from "../../assets/navLists"
 
 const Account = ({ removeAccount }) => {
     const user = {
@@ -11,7 +12,7 @@ const Account = ({ removeAccount }) => {
     }
     return (
         <React.Fragment>
-            <Navbar />
+            <Navbar navList={navUser} />
             <div className="account-bg">
                 <div className="account-title">
                     Minha Conta
