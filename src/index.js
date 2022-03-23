@@ -10,32 +10,35 @@ import Home from "./Pages/Home";
 import Account from "./Pages/Account";
 import Login from "./Pages/Login";
 import PrivateRoute from "./Components/PrivateRoute";
-import Navbar from "./Components/Navbar";
 import Theme from "./assets/theme"
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Logout from './Pages/Logout';
 import Signin from './Pages/Signin';
+import {Route} from "react-router-dom";
 
-const routes = [
-    {
-        path: "/",
-        exact: true,
-        component: Home,
-    },
+const privateRoutes = [
     {
         path: "/account",
         exact: true,
         component: Account,
     },
     {
-        path: "/login",
-        exact: true,
-        component: Login,
-    },
-    {
         path: "/logout",
         exact: true,
         component: Logout
+    },
+]
+
+const publicRoutes = [
+    {
+        path: "/",
+        exact: true,
+        component: Home,
+    },
+    {
+        path: "/login",
+        exact: true,
+        component: Login,
     },
     {
         path: "/signin",
@@ -47,11 +50,18 @@ const routes = [
 ReactDOM.render(
     <ThemeProvider theme={Theme} >
         <BrowserRouter>
-            <Navbar route="/"/>
             <div style={{ marginTop: '100px', height: '100%' }}>
                 <Switch>
-                    {routes.map((route, index) => (
+                    {privateRoutes.map((route, index) => (
                         <PrivateRoute
+                            key={index}
+                            path={route.path}
+                            exact={route.exact}
+                            component={route.component}
+                        />
+                    ))}
+                    {publicRoutes.map((route, index) => (
+                        <Route
                             key={index}
                             path={route.path}
                             exact={route.exact}
