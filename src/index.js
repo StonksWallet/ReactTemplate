@@ -14,6 +14,7 @@ import Navbar from "./Components/Navbar";
 import Theme from "./assets/theme"
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Logout from './Pages/Logout';
+import Signin from './Pages/Signin';
 
 const routes = [
     {
@@ -35,7 +36,12 @@ const routes = [
         path: "/logout",
         exact: true,
         component: Logout
-    }
+    },
+    {
+        path: "/signin",
+        exact: true,
+        component: Signin,
+    },
 ]
 
 ReactDOM.render(

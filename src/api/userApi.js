@@ -1,6 +1,16 @@
 import {apiUrl} from "../config/urls.js";
 import {postRequest, getRequest} from "./rest";
 
+async function signin(name, lastName, email, password) {
+    const body = {
+        name,
+        lastName,
+        email,
+        password,
+    }
+    await postRequest(body, apiUrl + "users/signin");
+}
+
 async function login(email, password) {
     const body = {
         email: email,
@@ -29,6 +39,7 @@ async function getUser() {
 }
 
 export const userApi = {
+    signin,
     login,
     logout,
     createUser,

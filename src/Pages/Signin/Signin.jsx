@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
 import Link from '@mui/material/Link';
 import InputField from "../../Components/InputField/InputField";
-import { login, verifyLogin } from "../../services/authentication"
+import { signin, verifyLogin } from "../../services/authentication"
 import { Redirect } from "react-router-dom";
 
 const styles = {
@@ -18,23 +18,27 @@ const styles = {
     },
 }
 
-class Login extends React.Component {
+class Signin extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
+            name: "",
+            lastName: "",
             email: "",
             password: "",
-            logged: false,
+            confirmPassword: "",
+            accountCreated: false,
         }
     }
 
-    _login = async () => {
+    _signin = async () => {
+        let { name, lastName, email, password } = this.state
         try {
-            await login(this.state.email, this.state.password)
+            await signin(name, lastName, email, password)
             this.setState((state) => ({
                 ...state,
-                logged: verifyLogin()
+                accountCreated: true,
             }))
         } catch(e) {
             console.log(e)
@@ -59,20 +63,46 @@ class Login extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {this.state.logged &&
-                    <Redirect to="/" />
+                {this.state.accountCreated &&
+                    <Redirect to="/login" />
                 }
                 <div className="image-bg">
                     <Paper style={styles.mainPaper}>
                         <div style={{ paddingBottom: '10px' }}>
-                            <span className="login-title">Entrar no Stonks Wallet</span>
+                            <span className="signin-title">Criar sua conta no Stonks Wallet</span>
                             <br />
-                            <span className="login-body">
-                                Novo usuário?
-                                <Link href="/signin" underline="none" color="#5e38ba">
-                                    {' Crie uma conta'}
+                            <span className="signin-body">
+                                Já é usuário?
+                                <Link href="/login" underline="none" color="#5e38ba">
+                                    {' Faça seu login.'}
                                 </Link>
                             </span>
+                        </div>
+                        <div style={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}>
+                            <InputField 
+                                style={{ width: '48.5%' }}
+                                value={this.state.name}
+                                onChange={this.handleInput}
+                                color="purple"
+                                id="name"
+                                label="Nome"
+                                name="name"
+                                variant="filled"
+                            />
+                            <InputField 
+                                style={{ width: '48.5%' }}
+                                value={this.state.lastName}
+                                onChange={this.handleInput}
+                                color="purple"
+                                id="lastName"
+                                label="Sobrenome"
+                                name="lastName"
+                                variant="filled"
+                            />
                         </div>
                         <InputField 
                             value={this.state.email}
@@ -105,7 +135,7 @@ class Login extends React.Component {
                                 <Button
                                     variant="contained"
                                     color="purple"
-                                    onClick={this._login}
+                                    onClick={this._signin}
                                     width="50px"
                                 >
                                     <span style={{color: 'white'}}>Entrar</span>
@@ -119,4 +149,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Signin;
