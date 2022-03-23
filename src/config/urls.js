@@ -1,1 +1,1 @@
-export const apiUrl = 'https://backendUrl.com/';
+export const apiUrl = 'http://localhost:3000/'
