@@ -3,12 +3,11 @@ import {postRequest, getRequest} from "./rest";
 
 async function signin(name, lastName, email, password) {
     const body = {
-        name,
-        lastName,
+        name: name + lastName,
         email,
         password,
     }
-    await postRequest(body, apiUrl + "users/signin");
+    await postRequest(body, apiUrl + "users");
 }
 
 async function login(email, password) {

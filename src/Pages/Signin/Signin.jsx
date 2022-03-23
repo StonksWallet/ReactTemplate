@@ -6,6 +6,8 @@ import Link from '@mui/material/Link';
 import InputField from "../../Components/InputField/InputField";
 import { signin, verifyLogin } from "../../services/authentication"
 import { Redirect } from "react-router-dom";
+import Navbar from "../../Components/Navbar";
+import { navGuest } from "../../assets/navLists";
 
 const styles = {
     mainPaper: {
@@ -63,6 +65,7 @@ class Signin extends React.Component {
     render() {
         return (
             <React.Fragment>
+                <Navbar navList={navGuest}/>
                 {this.state.accountCreated &&
                     <Redirect to="/login" />
                 }
@@ -131,14 +134,13 @@ class Signin extends React.Component {
                             display: 'flex',
                             justifyContent: 'center',
                         }}>
-                            <div style={{width: '100px', paddingTop: '15px'}}>
+                            <div style={{width: '120px', paddingTop: '15px'}}>
                                 <Button
                                     variant="contained"
                                     color="purple"
                                     onClick={this._signin}
-                                    width="50px"
                                 >
-                                    <span style={{color: 'white'}}>Entrar</span>
+                                    <span style={{color: 'white'}}>Cadastre-se</span>
                                 </Button>
                             </div>
                         </div>
