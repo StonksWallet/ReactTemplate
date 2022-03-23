@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import { verifyLogin, logout } from "../../services/authentication"
 import { CircularProgress } from "@mui/material";
@@ -14,7 +14,7 @@ const Logout = () => {
         setLoggingOut(false)
     }
 
-    useState(() => {
+    useEffect(() => {
         if(verifyLogin()) {
             _logout();
         }
