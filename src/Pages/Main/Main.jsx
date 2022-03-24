@@ -56,15 +56,32 @@ const Main = () => {
                 <div className="main-values">
                     <div className="main-values-item">
                         VALOR APLICADO <br />
-                        R${appliedValue}
+                        <span className="main-values-value">
+                            ${appliedValue.toLocaleString(
+                                undefined, 
+                                { minimumFractionDigits: 2 }
+                                )
+                            }
+                        </span>
                     </div>
                     <div className="main-values-item">
                         VALOR TOTAL <br />
-                        R${totalValue}
+                        <span className="main-values-value">
+                            ${totalValue.toLocaleString(
+                                undefined, 
+                                { minimumFractionDigits: 2 }
+                                )
+                            }
+                        </span>
                     </div>
                     <div className="main-values-item">
                         RENTABILIDADE <br />
-                        {(totalValue-appliedValue)/appliedValue*100}%
+                        <span className="main-values-value">
+                            {((totalValue-appliedValue)/appliedValue*100).toLocaleString(
+                                undefined, 
+                                { minimumFractionDigits: 2 }
+                                )}%
+                        </span>
                     </div>
                 </div>
                 <RentabilityGraph title="Rentabilidade Histórica" />

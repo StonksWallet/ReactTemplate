@@ -11,13 +11,14 @@
 }
 
 .assets-values {
-    width: 70px;
+    width: 100px;
     display: flex;
     flex-direction: column;
 }
 
 .assets-price {
     color: black;
+    text-align: center;
 }
 
 .assets-name {

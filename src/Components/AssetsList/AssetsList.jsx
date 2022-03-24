@@ -26,13 +26,19 @@ const AssetsList = ({ title, assets }) => {
                                 <span className="assets-name">{asset.name} ({asset.symbol})</span>
                                 <div className="assets-values">
                                     <span className="assets-price">
-                                        $ {asset.price}
+                                        $ {asset.price.toLocaleString(
+                                            undefined, 
+                                            { minimumFractionDigits: 2 }
+                                        )}
                                     </span>
                                     <span style={{
                                         color: asset.var_24h > 0 ? 'green' : 'red',
-                                        textAlign: 'start'
+                                        textAlign: 'center'
                                     }}>
-                                        {asset.var_24h*100}%
+                                        {(asset.var_24h*100).toLocaleString(
+                                            undefined, 
+                                            { minimumFractionDigits: 2 }
+                                        )}%
                                     </span>
                                 </div>
                             </ListItem>
