@@ -1,0 +1,30 @@
+.assets-list-bg {
+    width: 100%;
+    margin-top: 30px;
+    padding-bottom: 10px;
+}
+
+.assets-list-title {
+    padding: 20px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.assets-values {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.assets-price {
+    color: black;
+    text-align: center;
+}
+
+.assets-name {
+    color: black;
+}
+
+.assets-item:hover {
+    background-color: #b3b3b3 !important;
+}
