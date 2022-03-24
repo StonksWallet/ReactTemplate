@@ -12,7 +12,10 @@ function Home(props) {
         <Main /> :
         <React.Fragment>
             <Navbar navList={navGuest} />
-            <h2>Home</h2>
+            <div className="home">
+                <p id="mainText"> Monitore os seus<br /> ativos a partir de<br /> um único lugar</p>
+            </div>
+            
         </React.Fragment>
     )
 }
