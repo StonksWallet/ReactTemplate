@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
-import Link from '@mui/material/Link';
+import { Link } from "react-router-dom";
 import InputField from "../../Components/InputField/InputField";
 import { signin, verifyLogin } from "../../services/authentication"
 import { Redirect } from "react-router-dom";
@@ -76,7 +76,7 @@ class Signin extends React.Component {
                             <br />
                             <span className="signin-body">
                                 Já é usuário?
-                                <Link href="/login" underline="none" color="#5e38ba">
+                                <Link to="/login" style={{color:"#5e38ba"}}>
                                     {' Faça seu login.'}
                                 </Link>
                             </span>

@@ -2,12 +2,12 @@ import React from "react";
 import "./style.css";
 import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
-import Link from '@mui/material/Link';
 import InputField from "../../Components/InputField/InputField";
 import { login, verifyLogin } from "../../services/authentication"
 import { Redirect } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import { navGuest } from "../../assets/navLists"
+import { Link } from "react-router-dom";
 
 const styles = {
     mainPaper: {
@@ -72,7 +72,7 @@ class Login extends React.Component {
                             <br />
                             <span className="login-body">
                                 Novo usuário?
-                                <Link href="/signin" underline="none" color="#5e38ba">
+                                <Link to="/signin" style={{color:"#5e38ba"}}>
                                     {' Crie uma conta'}
                                 </Link>
                             </span>
