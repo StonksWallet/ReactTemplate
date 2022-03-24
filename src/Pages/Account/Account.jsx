@@ -16,8 +16,12 @@ const Account = () => {
     const [ user, setUser ] = useState(null)
 
     const fetchUser = async () => {
-        const _user = await userApi.getUser()
-        setUser(_user)
+        try {
+            const _user = await userApi.getUser()
+            setUser(_user)
+        } catch(e) {
+            console.log(e.message)
+        }
     }
 
     useEffect(() => {
