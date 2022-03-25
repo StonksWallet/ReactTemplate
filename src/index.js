@@ -16,6 +16,9 @@ import Logout from './Pages/Logout';
 import Signin from './Pages/Signin';
 import {Route} from "react-router-dom";
 
+require('dotenv').config();
+
+
 const privateRoutes = [
     {
         path: "/account",
