@@ -3,11 +3,13 @@ import "./style.css";
 import Navbar from "../../Components/Navbar";
 import { navUser } from "../../assets/navLists"
 import { verifyLogin } from "../../services/authentication"
-import RentabilityGraph from "../../Components/RentabilityGraph"
+import Graph from "../../Components/Graph"
 import AssetsList from "../../Components/AssetsList/AssetsList";
 import Orders from "../../Components/Orders/Orders";
+import Card from "../../Components/Card";
+import { faker } from "@faker-js/faker"
 
-const Main = () => {
+const Main = ({theme}) => {
     const appliedValue = 10000
     const totalValue = 20000
 
@@ -49,12 +51,17 @@ const Main = () => {
         }
     ]
 
+    const rentability = {
+        dates: new Array(10).fill().map((x, i) => i),
+        values: new Array(10).fill().map(x => faker.datatype.number({min: -100, max: 200})),
+    }
+
     return (
         <React.Fragment>
             <Navbar navList={navUser} />
             <div className="main-bg">
                 <div className="main-values">
-                    <div className="main-values-item">
+                    <Card>
                         VALOR APLICADO <br />
                         <span className="main-values-value">
                             ${appliedValue.toLocaleString(
@@ -63,8 +70,8 @@ const Main = () => {
                                 )
                             }
                         </span>
-                    </div>
-                    <div className="main-values-item">
+                    </Card>
+                    <Card>
                         VALOR TOTAL <br />
                         <span className="main-values-value">
                             ${totalValue.toLocaleString(
@@ -73,8 +80,8 @@ const Main = () => {
                                 )
                             }
                         </span>
-                    </div>
-                    <div className="main-values-item">
+                    </Card>
+                    <Card>
                         RENTABILIDADE <br />
                         <span className="main-values-value">
                             {((totalValue-appliedValue)/appliedValue*100).toLocaleString(
@@ -82,9 +89,13 @@ const Main = () => {
                                 { minimumFractionDigits: 2 }
                                 )}%
                         </span>
-                    </div>
+                    </Card>
                 </div>
-                <RentabilityGraph title="Rentabilidade Histórica" />
+                <Graph
+                    title="Rentabilidade Histórica" 
+                    assetName="Rentabilidade Histórica"
+                    data={rentability}
+                />
                 <AssetsList title="Meus Ativos" assets={myAssets} />
                 <Orders orders={orders}/>
             </div>
