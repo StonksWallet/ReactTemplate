@@ -10,9 +10,10 @@ const AssetsList = ({ title, assets, searchCallback, searchField = false }) => {
     const enter = useKeyPress('Enter');
 
     useEffect(() => {
-        if(enter) {
+        if(enter && search) {
             searchCallback(search);
         }
+
     }, [enter, search])
 
     function getHeader() {
