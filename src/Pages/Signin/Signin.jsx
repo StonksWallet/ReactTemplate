@@ -8,6 +8,7 @@ import { signin, verifyLogin } from "../../services/authentication"
 import { Redirect } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import { navGuest } from "../../assets/navLists";
+import { withSnackbar } from 'notistack';
 
 const styles = {
     mainPaper: {
@@ -38,12 +39,13 @@ class Signin extends React.Component {
         let { name, lastName, email, password } = this.state
         try {
             await signin(name, lastName, email, password)
+            this.props.enqueueSnackbar('Conta criada com sucesso')
             this.setState((state) => ({
                 ...state,
                 accountCreated: true,
             }))
         } catch(e) {
-            console.log(e)
+            this.props.enqueueSnackbar('Erro: ' + e.message)
         }
     }
 
@@ -151,4 +153,4 @@ class Signin extends React.Component {
     }
 }
 
-export default Signin;
+export default withSnackbar(Signin);

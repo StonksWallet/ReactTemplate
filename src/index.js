@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './assets/index.css';
 import './assets/config.css';
 
-import {BrowserRouter, Switch} from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 
 import * as serviceWorker from './serviceWorker';
 import PrivateRoute from "./Components/PrivateRoute";
@@ -64,30 +65,32 @@ const publicRoutes = [
 ]
 
 ReactDOM.render(
-    <ThemeProvider theme={Theme}>
-        <BrowserRouter>
-            <div style={{ marginTop: '100px', height: '100%' }}>
-                <Switch>
-                    {privateRoutes.map((route, index) => (
-                        <PrivateRoute
-                            key={index}
-                            path={route.path}
-                            exact={route.exact}
-                            component={route.component}
-                        />
-                    ))}
-                    {publicRoutes.map((route, index) => (
-                        <Route
-                            key={index}
-                            path={route.path}
-                            exact={route.exact}
-                            component={route.component}
-                        />
-                    ))}
-                    {/* 404? */}
-                </Switch>
-            </div>
-        </BrowserRouter>
+    <ThemeProvider theme={Theme} >
+        <SnackbarProvider maxSnack={3}>
+            <BrowserRouter>
+                <div style={{ marginTop: '100px', height: '100%' }}>
+                    <Switch>
+                        {privateRoutes.map((route, index) => (
+                            <PrivateRoute
+                                key={index}
+                                path={route.path}
+                                exact={route.exact}
+                                component={route.component}
+                            />
+                        ))}
+                        {publicRoutes.map((route, index) => (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                exact={route.exact}
+                                component={route.component}
+                            />
+                        ))}
+                        {/* 404? */}
+                    </Switch>
+                </div>
+            </BrowserRouter>
+        </SnackbarProvider>
     </ThemeProvider>
     , document.getElementById('root'));
 
