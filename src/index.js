@@ -15,6 +15,7 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Logout from './Pages/Logout';
 import Signin from './Pages/Signin';
 import {Route} from "react-router-dom";
+import Assets from "./Pages/Assets";
 
 require('dotenv').config();
 
@@ -29,6 +30,11 @@ const privateRoutes = [
         path: "/logout",
         exact: true,
         component: Logout
+    },
+    {
+        path: "/assets",
+        exact: true,
+        component: Assets
     },
 ]
 
