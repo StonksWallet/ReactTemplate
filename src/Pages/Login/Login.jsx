@@ -8,6 +8,7 @@ import { Redirect } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import { navGuest } from "../../assets/navLists"
 import { Link } from "react-router-dom";
+import { withSnackbar } from 'notistack';
 
 const styles = {
     mainPaper: {
@@ -39,7 +40,7 @@ class Login extends React.Component {
                 logged: verifyLogin()
             }))
         } catch(e) {
-            console.log(e)
+            this.props.enqueueSnackbar('Erro: ' + e.message)
         }
     }
 
@@ -122,4 +123,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default withSnackbar(Login);
