@@ -1,0 +1,7 @@
+.insights-bg {
+    width: 65%;
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
