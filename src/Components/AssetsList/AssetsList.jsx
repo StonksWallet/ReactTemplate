@@ -1,13 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import "./style.css";
 import { List, ListItem, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
+import InputField from "../InputField";
+import {useKeyPress} from "../../hooks/useKeyPress";
 
-const AssetsList = ({ title, assets }) => {
+const AssetsList = ({ title, assets, searchCallback, searchField = false }) => {
+    const [search, setSearch] = useState("");
+    const enter = useKeyPress('Enter');
+
+    useEffect(() => {
+        if(enter && search) {
+            searchCallback(search);
+        }
+
+    }, [enter, search])
+
+    function getHeader() {
+        if(searchField) {
+            return (
+                <div className="assets-list-header">
+                    <p className="assets-list-title">{title}</p>
+                    <InputField
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        color="purple"
+                        id="search"
+                        label="Buscar"
+                        name="search"
+                        type="text"
+                        style={{width: '30%'}}
+                        size="small"
+                        variant="outlined"
+                    />
+                </div>
+            );
+        } else {
+            return <p className="assets-list-title">{title}</p>
+        }
+    }
+
     return (
         <React.Fragment>
             <Paper className="assets-list-bg">
-                <p className="assets-list-title">{title}</p>
+                {getHeader()}
                 <List>
                     {assets.map(asset => (
                             <ListItem
@@ -27,7 +63,7 @@ const AssetsList = ({ title, assets }) => {
                                 <div className="assets-values">
                                     <span className="assets-price">
                                         $ {asset.price.toLocaleString(
-                                            undefined, 
+                                            undefined,
                                             { minimumFractionDigits: 2 }
                                         )}
                                     </span>
@@ -36,7 +72,7 @@ const AssetsList = ({ title, assets }) => {
                                         textAlign: 'center'
                                     }}>
                                         {(asset.var_24h*100).toLocaleString(
-                                            undefined, 
+                                            undefined,
                                             { minimumFractionDigits: 2 }
                                         )}%
                                     </span>
