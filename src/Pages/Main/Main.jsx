@@ -96,7 +96,11 @@ const Main = ({theme}) => {
                     assetName="Rentabilidade Histórica"
                     data={rentability}
                 />
-                <AssetsList title="Meus Ativos" assets={myAssets} />
+                <AssetsList
+                    title="Meus Ativos"
+                    assets={myAssets}
+                    dataLoaded // TODO: fix
+                />
                 <Orders orders={orders}/>
             </div>
         </React.Fragment>

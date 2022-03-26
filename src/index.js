@@ -7,16 +7,18 @@ import { BrowserRouter, Switch } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 
 import * as serviceWorker from './serviceWorker';
-import Home from "./Pages/Home";
-import Account from "./Pages/Account";
-import Login from "./Pages/Login";
 import PrivateRoute from "./Components/PrivateRoute";
 import Theme from "./assets/theme"
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import {Route} from "react-router-dom";
+
+import Home from "./Pages/Home";
+import Account from "./Pages/Account";
+import Login from "./Pages/Login";
 import Logout from './Pages/Logout';
 import Signin from './Pages/Signin';
-import {Route} from "react-router-dom";
 import Assets from "./Pages/Assets";
+import Insights from './Pages/Insights';
 
 require('dotenv').config();
 
@@ -36,6 +38,11 @@ const privateRoutes = [
         path: "/assets",
         exact: true,
         component: Assets
+    },
+    {
+        path: "/insights",
+        exact: true,
+        component: Insights
     },
 ]
 
