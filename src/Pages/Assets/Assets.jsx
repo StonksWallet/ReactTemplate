@@ -40,6 +40,7 @@ const Assets = () => {
                     assets={assets}
                     searchField={true}
                     searchCallback={onSearch}
+                    dataLoaded //TODO: fix
                 />
             </div>
         </React.Fragment>

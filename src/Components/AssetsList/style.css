@@ -40,3 +40,9 @@
 .assets-item:hover {
     background-color: #b3b3b3 !important;
 }
+
+.assets-list-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
