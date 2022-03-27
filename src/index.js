@@ -19,6 +19,7 @@ import Logout from './Pages/Logout';
 import Signin from './Pages/Signin';
 import Assets from "./Pages/Assets";
 import Insights from './Pages/Insights';
+import Asset from "./Pages/Asset";
 
 require('dotenv').config();
 
@@ -38,6 +39,11 @@ const privateRoutes = [
         path: "/assets",
         exact: true,
         component: Assets
+    },
+    {
+        path: "/assets/*",
+        exact: true,
+        component: Asset
     },
     {
         path: "/insights",

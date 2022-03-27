@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./style.css";
 import { List, ListItem, Paper } from "@mui/material";
 
@@ -25,7 +25,7 @@ const Orders = ({ orders }) => {
                             <div className="orders-values">
                                 <span className="orders-price">
                                     $ {order.price.toLocaleString(
-                                        undefined, 
+                                        undefined,
                                         { minimumFractionDigits: 2 }
                                     )}
                                 </span>
