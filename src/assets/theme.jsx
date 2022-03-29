@@ -9,17 +9,6 @@ const theme = createTheme({
         main: '#5D5FEF',
       },
     },
-    components: {
-        MuiButtonBase: {
-            defaultProps: {
-                style: {
-                    borderRadius: 32,
-                    textTransform: 'none',
-                    width: '100%',
-                }
-            }
-        }
-    }
 });
 
 export default theme 

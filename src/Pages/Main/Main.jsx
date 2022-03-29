@@ -87,16 +87,11 @@ const Main = ({ theme, enqueueSnackbar }) => {
                         </span>
                     </Card>
                 </div>
-                <Graph
-                    title="Rentabilidade Histórica" 
-                    assetName="Rentabilidade Histórica"
-                    data={rentability}
-                />
                 <AssetsList
                     title="Meus Ativos"
                     assets={myAssets}
                 />
-                <Orders orders={myOrders}/>
+                <Orders orders={myOrders} fetchOrders={fetchOrders}/>
             </div>
         </React.Fragment>
     )

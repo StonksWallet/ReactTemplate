@@ -25,6 +25,11 @@ const Navbar = ({ navList }) => {
                             <Button 
                                 variant="contained" 
                                 color={btn.color}
+                                style={{
+                                    borderRadius: 32,
+                                    textTransform: 'none',
+                                    width: '100%',
+                                }}
                             >
                                 {btn.name}
                             </Button>

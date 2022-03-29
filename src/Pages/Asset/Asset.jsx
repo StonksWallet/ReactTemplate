@@ -32,6 +32,12 @@ const Asset = ({ match, enqueueSnackbar }) => {
         setShowTradeModal(false);
     }
     
+    const handleTrade = async (asset, price, date, quantity, type) => {
+        const result = await orderApi.createOrder(asset, price, date, quantity, type)
+        console.log(result)
+        await fetchOrders()
+    }
+    
     const fetchOrders = async () => {
         try {
             const orderList = await orderApi.getOrders()
@@ -51,7 +57,7 @@ const Asset = ({ match, enqueueSnackbar }) => {
         <div>
             <Navbar navList={navUser} />
             <div className="asset-bg">
-                <TradeModal open={showTradeModal} onClose={closeTradeModal} asset={asset}/>
+                <TradeModal open={showTradeModal} onClose={closeTradeModal} asset={asset} title="Realizar Operação" confirmCallback={handleTrade}/>
                 <div className="asset-values">
                     <Card>
                         LUCRO REALIZADO <br />
@@ -82,7 +88,7 @@ const Asset = ({ match, enqueueSnackbar }) => {
                     assetName={asset}
                     data={rentability}
                 />
-                <Orders orders={orders}/>
+                <Orders orders={orders} fetchOrders={fetchOrders} enqueueSnackbar={enqueueSnackbar}/>
             </div>
         </div>
     )

@@ -136,7 +136,7 @@ class Signin extends React.Component {
                             display: 'flex',
                             justifyContent: 'center',
                         }}>
-                            <div style={{width: '120px', paddingTop: '15px'}}>
+                            <div style={{width: '150px', paddingTop: '15px'}}>
                                 <Button
                                     variant="contained"
                                     color="purple"

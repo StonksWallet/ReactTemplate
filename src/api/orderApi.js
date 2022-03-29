@@ -1,5 +1,5 @@
 import {apiUrl} from "../config/urls.js";
-import {postRequest, getRequest} from "./rest";
+import {postRequest, getRequest, putRequest, deleteRequest} from "./rest";
 
 const getOrders = async () => {
     const orders = await getRequest(apiUrl + "order")
@@ -15,7 +15,22 @@ const createOrder = async (name, price, order_date, quantity, type_order) => {
     return result
 }
 
+const editOrder = async (id, name, price, order_date, quantity, type_order) => {
+    const body = {
+        id, name, price, order_date, quantity, type_order
+    }
+    const result = await putRequest(apiUrl + "order/edit", body)
+    return result
+}
+
+const deleteOrder = async id => {
+    const result = await deleteRequest(apiUrl + "order/delete", {id})
+    return result
+}
+
 export const orderApi = {
     getOrders,
-    createOrder
+    createOrder,
+    editOrder,
+    deleteOrder
 }

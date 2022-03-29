@@ -14,9 +14,10 @@ export async function getRequest(url) {
     return result;
 }
 
-export async function deleteRequest(url) {
+export async function deleteRequest(url, body) {
     const response = await fetch(url, {
         method: 'DELETE',
+        body: JSON.stringify(body),
         headers: getHeaders(),
     });
 

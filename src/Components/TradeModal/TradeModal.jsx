@@ -1,28 +1,36 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import {Box, FormControl, InputLabel, MenuItem, Modal, Select, TextField, Typography} from "@mui/material";
-import { format, parseISO } from 'date-fns'
-import { orderApi } from "../../api/orderApi.js";
+import { format } from 'date-fns'
 import { withSnackbar } from 'notistack';
 
-const TradeModal = ({enqueueSnackbar, open, onClose, asset}) => {
+const TradeModal = ({enqueueSnackbar, open, onClose, asset, confirmCallback, title, defaultOrder }) => {
     const [type, setType] = useState('buy');
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
     const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd"));
 
-    const handleTrade = async (e) => {
-        e.preventDefault();
-        alert(type + " " + quantity + " " + price + " " + date);
+    useEffect(() => {
+        if(defaultOrder)  {
+            console.log(defaultOrder)
+            setType(defaultOrder.type_order ? "buy" : "sell")
+            setQuantity(defaultOrder.quantity)
+            setPrice(defaultOrder.price)
+            setDate(defaultOrder.order_date.substring(0,10))
+        }
+    }, [defaultOrder])
+
+    const handleConfirm = async (e) => {
+        e.preventDefault()
         try {
-            const result = await orderApi.createOrder(asset, price, date, quantity, type === 'buy')
-            console.log(result)
-            enqueueSnackbar('Operação criada.', {
+            console.log(type)
+            await confirmCallback(asset, price, date, quantity, type === 'buy', defaultOrder?.id)
+            enqueueSnackbar('Operação realizada.', {
                 variant: 'success'
             })
-            setType('buy');
-            setQuantity(undefined);
-            onClose();
+            setType('buy')
+            setQuantity(undefined)
+            onClose()
         } catch(err) {
             enqueueSnackbar('Erro: ' + err.message, {
                 variant: 'error'
@@ -38,9 +46,9 @@ const TradeModal = ({enqueueSnackbar, open, onClose, asset}) => {
             aria-describedby="modal-modal-description"
         >
             <Box className={'tradeModal-box'}>
-                <form onSubmit={handleTrade}>
+                <form onSubmit={handleConfirm}>
                     <Typography id="modal-modal-title" variant="h4" component="h2">
-                        Realizar Operação
+                        {title}
                     </Typography>
                     <div className='tradeModal-form'>
                         <FormControl fullWidth>
