@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import Navbar from "../../Components/Navbar";
 import { navUser } from "../../assets/navLists"
@@ -7,36 +7,22 @@ import Orders from "../../Components/Orders/Orders";
 import Card from "../../Components/Card";
 import { faker } from "@faker-js/faker"
 import TradeModal from "../../Components/TradeModal";
+import { orderApi } from "../../api/orderApi.js";
+import { withSnackbar } from 'notistack';
 
-const Asset = ({match}) => {
-    const [showTradeModal, setShowTradeModal] = useState(false);
+const rentability = {
+    dates: new Array(30).fill().map((x, i) => i),
+    values: new Array(30).fill().map(x => faker.datatype.number({min: -100, max: 200})),
+}
+
+const Asset = ({ match, enqueueSnackbar }) => {
+    const [ showTradeModal, setShowTradeModal ] = useState(false);
+    const [ orders, setOrders ] = useState(null)
 
     const asset = match.params[0];
 
     const appliedValue = 10000
     const totalValue = 20000
-
-    const orders = [
-        {
-            name: "Bitcoin",
-            symbol: "BTC",
-            type: "buy",
-            price: 41000,
-            quantity: 0.001,
-        },
-        {
-            name: "Bitcoin",
-            symbol: "BTC",
-            type: "sell",
-            price: 3000,
-            quantity: 0.01,
-        }
-    ]
-
-    const rentability = {
-        dates: new Array(10).fill().map((x, i) => i),
-        values: new Array(10).fill().map(x => faker.datatype.number({min: -100, max: 200})),
-    }
 
     function openTradeModal() {
         setShowTradeModal(true);
@@ -45,6 +31,21 @@ const Asset = ({match}) => {
     function closeTradeModal() {
         setShowTradeModal(false);
     }
+    
+    const fetchOrders = async () => {
+        try {
+            const orderList = await orderApi.getOrders()
+            setOrders(orderList.filter(order => order.name.toLowerCase() === asset.toLowerCase()))
+        } catch(e) {
+            enqueueSnackbar('Erro: ' + e.message, {
+                variant: 'error'
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchOrders()
+    }, [])
 
     return (
         <div>
@@ -87,4 +88,4 @@ const Asset = ({match}) => {
     )
 }
 
-export default Asset
+export default withSnackbar(Asset)

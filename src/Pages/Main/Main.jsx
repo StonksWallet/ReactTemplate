@@ -8,53 +8,49 @@ import AssetsList from "../../Components/AssetsList/AssetsList";
 import Orders from "../../Components/Orders/Orders";
 import Card from "../../Components/Card";
 import { faker } from "@faker-js/faker"
+import { CircularProgress } from "@mui/material";
+import { assetApi } from "../../api/assetApi.js";
+import { orderApi } from "../../api/orderApi.js";
+import { withSnackbar } from 'notistack';
 
-const Main = ({theme}) => {
+const rentability = {
+    dates: new Array(30).fill().map((x, i) => i),
+    values: new Array(30).fill().map(x => faker.datatype.number({min: -50, max: 100})),
+}
+
+const Main = ({ theme, enqueueSnackbar }) => {
+    const [ myAssets, setMyAssets ] = useState(null)
+    const [ myOrders, setMyOrders ] = useState(null)
+
     const appliedValue = 10000
     const totalValue = 20000
 
-    const myAssets = [
-        {
-            name: "Bitcoin",
-            symbol: "BTC",
-            price: 42000,
-            var_24h: 0.05
-        },
-        {
-            name: "Ethereum",
-            symbol: "ETH",
-            price: 3000,
-            var_24h: 0.09
-        },
-        {
-            name: "Solana",
-            symbol: "SOL",
-            price: 95,
-            var_24h: -0.03
-        },
-    ]
-
-    const orders = [
-        {
-            name: "Bitcoin",
-            symbol: "BTC",
-            type: "buy",
-            price: 41000,
-            quantity: 0.001,
-        },
-        {
-            name: "Ethereum",
-            symbol: "ETH",
-            type: "sell",
-            price: 3000,
-            quantity: 0.01,
+    const fetchAssets = async () => {
+        try {
+            const assetList = await assetApi.getAssets()
+            setMyAssets(assetList)
+        } catch(e) {
+            enqueueSnackbar('Erro: ' + e.message, {
+                variant: 'error'
+            })
         }
-    ]
-
-    const rentability = {
-        dates: new Array(10).fill().map((x, i) => i),
-        values: new Array(10).fill().map(x => faker.datatype.number({min: -100, max: 200})),
     }
+
+    const fetchOrders = async () => {
+        try {
+            const orderList = await orderApi.getOrders()
+            setMyOrders(orderList)
+        } catch(e) {
+            enqueueSnackbar('Erro: ' + e.message, {
+                variant: 'error'
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchAssets()
+        fetchOrders()
+    }, [])
 
     return (
         <React.Fragment>
@@ -99,12 +95,11 @@ const Main = ({theme}) => {
                 <AssetsList
                     title="Meus Ativos"
                     assets={myAssets}
-                    dataLoaded // TODO: fix
                 />
-                <Orders orders={orders}/>
+                <Orders orders={myOrders}/>
             </div>
         </React.Fragment>
     )
 }
 
-export default Main
+export default withSnackbar(Main)

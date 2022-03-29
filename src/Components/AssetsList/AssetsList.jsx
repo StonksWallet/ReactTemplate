@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import InputField from "../InputField";
 import {useKeyPress} from "../../hooks/useKeyPress";
 
-const AssetsList = ({ title, assets, searchCallback, searchField = false, dataLoaded }) => {
+const AssetsList = ({ title, assets, searchCallback, searchField = false}) => {
     const [search, setSearch] = useState("");
     const enter = useKeyPress('Enter');
 
@@ -44,12 +44,12 @@ const AssetsList = ({ title, assets, searchCallback, searchField = false, dataLo
         <React.Fragment>
             <Paper className="assets-list-bg">
                 {getHeader()}
-                {!dataLoaded &&
+                {!Array.isArray(assets) &&
                     <div className="assets-list-progress">
                         <CircularProgress />
                     </div>
                 }
-                {dataLoaded &&
+                {assets &&
                     <List>
                         {assets.map(asset => (
                                 <ListItem
@@ -68,7 +68,7 @@ const AssetsList = ({ title, assets, searchCallback, searchField = false, dataLo
                                     <span className="assets-name">{asset.name} ({asset.symbol})</span>
                                     <div className="assets-values">
                                         <span className="assets-price">
-                                            $ {asset.price.toLocaleString(
+                                            $ {parseFloat(asset.price).toLocaleString(
                                                 undefined,
                                                 { minimumFractionDigits: 2 }
                                             )}
@@ -77,7 +77,7 @@ const AssetsList = ({ title, assets, searchCallback, searchField = false, dataLo
                                             color: asset.var_24h > 0 ? 'green' : 'red',
                                             textAlign: 'center'
                                         }}>
-                                            {(asset.var_24h*100).toLocaleString(
+                                            {(parseFloat(asset.changePercent)).toLocaleString(
                                                 undefined,
                                                 { minimumFractionDigits: 2 }
                                             )}%

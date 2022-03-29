@@ -6,12 +6,13 @@ import Navbar from "../../Components/Navbar";
 import { navUser } from "../../assets/navLists"
 import { userApi } from "../../api/userApi.js";
 import { CircularProgress } from "@mui/material";
+import { withSnackbar } from 'notistack';
 
 const removeAccount = () => {
 
 }
 
-const Account = () => {
+const Account = ({ enqueueSnackbar }) => {
 
     const [ user, setUser ] = useState(null)
 
@@ -20,7 +21,9 @@ const Account = () => {
             const _user = await userApi.getUser()
             setUser(_user)
         } catch(e) {
-            console.log(e.message)
+            enqueueSnackbar('Erro: ' + e.message, {
+                variant: 'error'
+            })
         }
     }
 
@@ -70,4 +73,4 @@ const Account = () => {
     );
 }
 
-export default Account;
+export default withSnackbar(Account);
