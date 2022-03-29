@@ -24,7 +24,7 @@ const TradeModal = ({enqueueSnackbar, open, onClose, asset}) => {
             setQuantity(undefined);
             onClose();
         } catch(err) {
-            enqueueSnackbar('Erro: ' + e.message, {
+            enqueueSnackbar('Erro: ' + err.message, {
                 variant: 'error'
             })
         }
