@@ -1,18 +1,32 @@
 import React, {useState} from "react";
 import "./style.css";
 import {Box, FormControl, InputLabel, MenuItem, Modal, Select, TextField, Typography} from "@mui/material";
+import { format, parseISO } from 'date-fns'
+import { orderApi } from "../../api/orderApi.js";
+import { withSnackbar } from 'notistack';
 
-const TradeModal = ({open, onClose, asset}) => {
+const TradeModal = ({enqueueSnackbar, open, onClose, asset}) => {
     const [type, setType] = useState('buy');
-    const [quantity, setQuantity] = useState();
+    const [quantity, setQuantity] = useState(0);
+    const [price, setPrice] = useState(0);
+    const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd"));
 
-    function handleTrade(e) {
+    const handleTrade = async (e) => {
         e.preventDefault();
-        if(type && quantity) {
-            alert(type + " " + quantity);
+        alert(type + " " + quantity + " " + price + " " + date);
+        try {
+            const result = await orderApi.createOrder(asset, price, date, quantity, type === 'buy')
+            console.log(result)
+            enqueueSnackbar('Operação criada.', {
+                variant: 'success'
+            })
             setType('buy');
             setQuantity(undefined);
             onClose();
+        } catch(err) {
+            enqueueSnackbar('Erro: ' + e.message, {
+                variant: 'error'
+            })
         }
     }
 
@@ -46,8 +60,22 @@ const TradeModal = ({open, onClose, asset}) => {
                             </div>
                             <div className='tradeModal-formComponent'>
                                 <TextField
-                                    id="outlined-number"
-                                    label="Number"
+                                    id="outlined-price"
+                                    label="Price"
+                                    type="number"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    sx={{width: '300px'}}
+                                    required={true}
+                                />
+                            </div>
+                            <div className='tradeModal-formComponent'>
+                                <TextField
+                                    id="outlined-quantity"
+                                    label="Quantity"
                                     type="number"
                                     InputLabelProps={{
                                         shrink: true,
@@ -56,6 +84,18 @@ const TradeModal = ({open, onClose, asset}) => {
                                     onChange={(e) => setQuantity(e.target.value)}
                                     sx={{width: '300px'}}
                                     required={true}
+                                />
+                            </div>
+                            <div className='tradeModal-formComponent'>
+                                <TextField
+                                    id="date"
+                                    label="Date"
+                                    type="date"
+                                    value={date}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={(e) => setDate(e.target.value)}
                                 />
                             </div>
                             <div className='tradeModal-formComponent'>
@@ -71,4 +111,4 @@ const TradeModal = ({open, onClose, asset}) => {
     );
 }
 
-export default TradeModal
+export default withSnackbar(TradeModal)

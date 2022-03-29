@@ -30,19 +30,19 @@ class Insights extends React.Component {
                         name: "Bitcoin",
                         symbol: "BTC",
                         price: 42000,
-                        var_24h: 0.05
+                        changePercent: 0.05
                     },
                     {
                         name: "Ethereum",
                         symbol: "ETH",
                         price: 3000,
-                        var_24h: 0.09
+                        changePercent: 0.09
                     },
                     {
                         name: "Solana",
                         symbol: "SOL",
                         price: 95,
-                        var_24h: -0.03
+                        changePercent: -0.03
                     },
                 ],
                 mostOperations: [
@@ -50,19 +50,19 @@ class Insights extends React.Component {
                         name: "Bitcoin",
                         symbol: "BTC",
                         price: 42000,
-                        var_24h: 0.05
+                        changePercent: 0.05
                     },
                     {
                         name: "Ethereum",
                         symbol: "ETH",
                         price: 3000,
-                        var_24h: 0.09
+                        changePercent: 0.09
                     },
                     {
                         name: "Solana",
                         symbol: "SOL",
                         price: 95,
-                        var_24h: -0.03
+                        changePercent: -0.03
                     },
                 ],
                 dataLoaded: true,
