@@ -44,7 +44,7 @@ const Assets = ({ enqueueSnackbar }) => {
                 <AssetsList
                     title="Ativos"
                     assets={assets}
-                    searchField={true}
+                    searchField={false}
                     searchCallback={onSearch}
                     dataLoaded //TODO: fix
                 />

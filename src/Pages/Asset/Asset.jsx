@@ -9,6 +9,7 @@ import { faker } from "@faker-js/faker"
 import TradeModal from "../../Components/TradeModal";
 import { orderApi } from "../../api/orderApi.js";
 import { withSnackbar } from 'notistack';
+import { reportApi } from "../../api/reportApi.js";
 
 const rentability = {
     dates: new Array(30).fill().map((x, i) => i),
@@ -18,11 +19,21 @@ const rentability = {
 const Asset = ({ match, enqueueSnackbar }) => {
     const [ showTradeModal, setShowTradeModal ] = useState(false);
     const [ orders, setOrders ] = useState(null)
+    const [ realizedProfit, setRealizedProfit ] = useState(0)
 
     const asset = match.params[0];
-
-    const appliedValue = 10000
-    const totalValue = 20000
+    
+    const fetchRealizedProfit = async() => {
+        try {
+            const profit = await reportApi.getProfit(asset)
+            console.log(profit)
+            setRealizedProfit(profit.profit)
+        } catch(e) {
+            enqueueSnackbar('Erro: ' + e.message, {
+                variant: 'error'
+            })
+        }
+    }
 
     function openTradeModal() {
         setShowTradeModal(true);
@@ -51,6 +62,7 @@ const Asset = ({ match, enqueueSnackbar }) => {
 
     useEffect(() => {
         fetchOrders()
+        fetchRealizedProfit()
     }, [])
 
     return (
@@ -60,16 +72,16 @@ const Asset = ({ match, enqueueSnackbar }) => {
                 <TradeModal open={showTradeModal} onClose={closeTradeModal} asset={asset} title="Realizar Operação" confirmCallback={handleTrade}/>
                 <div className="asset-values">
                     <Card>
-                        LUCRO REALIZADO <br />
+                        VENDA REALIZADA <br />
                         <span className="asset-values-value">
-                            ${appliedValue.toLocaleString(
+                            ${realizedProfit.toLocaleString(
                                 undefined,
                                 { minimumFractionDigits: 2 }
                                 )
                             }
                         </span>
                     </Card>
-                    <Card>
+                    {/*<Card>
                         VALOR TOTAL <br />
                         <span className="asset-values-value">
                             ${totalValue.toLocaleString(
@@ -78,7 +90,7 @@ const Asset = ({ match, enqueueSnackbar }) => {
                                 )
                             }
                         </span>
-                    </Card>
+                        </Card>*/}
                     <button className="asset-trade" onClick={openTradeModal}>
                         <span>Realizar Operação</span>
                     </button>

@@ -21,8 +21,9 @@ export async function deleteRequest(url, body) {
         headers: getHeaders(),
     });
 
-    if(!response.status === 204) {
-        throw new Error("Delete Error");
+    const result = await response.json();
+    if(!response.ok) {
+        throw new Error(result.message);
     }
 }
 
@@ -47,9 +48,10 @@ export async function putRequest(url, body) {
         body: JSON.stringify(body),
         headers: getHeaders(),
     });
+    const result = await response.json();
 
-    if(!response.status === 204) {
-        throw new Error("Put error");
+    if(!response.ok){
+        throw new Error(result.message);
     }
 }
 

@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./style.css";
 import Navbar from "../../Components/Navbar";
 import { navUser } from "../../assets/navLists"
-import { verifyLogin } from "../../services/authentication"
-import Graph from "../../Components/Graph"
 import AssetsList from "../../Components/AssetsList/AssetsList";
 import Orders from "../../Components/Orders/Orders";
 import Card from "../../Components/Card";
 import { faker } from "@faker-js/faker"
-import { CircularProgress } from "@mui/material";
 import { assetApi } from "../../api/assetApi.js";
 import { orderApi } from "../../api/orderApi.js";
+import { reportApi } from "../../api/reportApi.js";
 import { withSnackbar } from 'notistack';
 
 const rentability = {
@@ -21,13 +19,11 @@ const rentability = {
 const Main = ({ theme, enqueueSnackbar }) => {
     const [ myAssets, setMyAssets ] = useState(null)
     const [ myOrders, setMyOrders ] = useState(null)
-
-    const appliedValue = 10000
-    const totalValue = 20000
+    const [ realizedProfit, setRealizedProfit ] = useState(0)
 
     const fetchAssets = async () => {
         try {
-            const assetList = await assetApi.getAssets()
+            const assetList = await assetApi.getMyAssets()
             setMyAssets(assetList)
         } catch(e) {
             enqueueSnackbar('Erro: ' + e.message, {
@@ -47,7 +43,19 @@ const Main = ({ theme, enqueueSnackbar }) => {
         }
     }
 
+    const fetchRealizedProfit = async() => {
+        try {
+            const profit = await reportApi.getProfit()
+            setRealizedProfit(profit.profit)
+        } catch(e) {
+            enqueueSnackbar('Erro: ' + e.message, {
+                variant: 'error'
+            })
+        }
+    }
+
     useEffect(() => {
+        fetchRealizedProfit()
         fetchAssets()
         fetchOrders()
     }, [])
@@ -58,16 +66,16 @@ const Main = ({ theme, enqueueSnackbar }) => {
             <div className="main-bg">
                 <div className="main-values">
                     <Card>
-                        VALOR APLICADO <br />
+                        VENDA REALIZADA <br />
                         <span className="main-values-value">
-                            ${appliedValue.toLocaleString(
+                            ${realizedProfit.toLocaleString(
                                 undefined, 
                                 { minimumFractionDigits: 2 }
                                 )
                             }
                         </span>
                     </Card>
-                    <Card>
+                    {/*<Card>
                         VALOR TOTAL <br />
                         <span className="main-values-value">
                             ${totalValue.toLocaleString(
@@ -83,9 +91,9 @@ const Main = ({ theme, enqueueSnackbar }) => {
                             {((totalValue-appliedValue)/appliedValue*100).toLocaleString(
                                 undefined, 
                                 { minimumFractionDigits: 2 }
-                                )}%
+                            )}%
                         </span>
-                    </Card>
+                    </Card>*/}
                 </div>
                 <AssetsList
                     title="Meus Ativos"
