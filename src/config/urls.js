@@ -1,1 +1,1 @@
-export const apiUrl = 'https://stonks-wallet-back.herokuapp.com/' 
+export const apiUrl = 'https://stonks-wallet-back.herokuapp.com/'
