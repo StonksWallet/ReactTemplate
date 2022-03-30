@@ -1,0 +1,48 @@
+.assets-list-bg {
+    width: 100%;
+    margin-top: 30px;
+    padding-bottom: 10px;
+}
+
+.assets-list-header {
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.assets-list-header p {
+    font-weight: 700;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.assets-list-title {
+    padding: 20px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.assets-values {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.assets-price {
+    color: black;
+    text-align: center;
+}
+
+.assets-name {
+    color: black;
+}
+
+.assets-item:hover {
+    background-color: #b3b3b3 !important;
+}
+
+.assets-list-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

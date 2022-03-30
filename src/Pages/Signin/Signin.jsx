@@ -2,12 +2,12 @@ import React from "react";
 import "./style.css";
 import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
+import { Link } from "react-router-dom";
 import InputField from "../../Components/InputField/InputField";
-import { login, verifyLogin } from "../../services/authentication"
+import { signin, verifyLogin } from "../../services/authentication"
 import { Redirect } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
-import { navGuest } from "../../assets/navLists"
-import { Link } from "react-router-dom";
+import { navGuest } from "../../assets/navLists";
 import { withSnackbar } from 'notistack';
 
 const styles = {
@@ -21,23 +21,28 @@ const styles = {
     },
 }
 
-class Login extends React.Component {
+class Signin extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
+            name: "",
+            lastName: "",
             email: "",
             password: "",
-            logged: false,
+            confirmPassword: "",
+            accountCreated: false,
         }
     }
 
-    _login = async () => {
+    _signin = async () => {
+        let { name, lastName, email, password } = this.state
         try {
-            await login(this.state.email, this.state.password)
+            await signin(name, lastName, email, password)
+            this.props.enqueueSnackbar('Conta criada com sucesso')
             this.setState((state) => ({
                 ...state,
-                logged: verifyLogin()
+                accountCreated: true,
             }))
         } catch(e) {
             this.props.enqueueSnackbar('Erro: ' + e.message)
@@ -62,21 +67,47 @@ class Login extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {this.state.logged &&
-                    <Redirect to="/" />
+                <Navbar navList={navGuest}/>
+                {this.state.accountCreated &&
+                    <Redirect to="/login" />
                 }
-                <Navbar navList={navGuest} />
                 <div className="image-bg">
                     <Paper style={styles.mainPaper}>
                         <div style={{ paddingBottom: '10px' }}>
-                            <span className="login-title">Entrar no Stonks Wallet</span>
+                            <span className="signin-title">Criar sua conta no Stonks Wallet</span>
                             <br />
-                            <span className="login-body">
-                                Novo usuário?
-                                <Link to="/signin" style={{color:"#5e38ba"}}>
-                                    {' Crie uma conta'}
+                            <span className="signin-body">
+                                Já é usuário?
+                                <Link to="/login" style={{color:"#5e38ba"}}>
+                                    {' Faça seu login.'}
                                 </Link>
                             </span>
+                        </div>
+                        <div style={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}>
+                            <InputField 
+                                style={{ width: '48.5%' }}
+                                value={this.state.name}
+                                onChange={this.handleInput}
+                                color="purple"
+                                id="name"
+                                label="Nome"
+                                name="name"
+                                variant="filled"
+                            />
+                            <InputField 
+                                style={{ width: '48.5%' }}
+                                value={this.state.lastName}
+                                onChange={this.handleInput}
+                                color="purple"
+                                id="lastName"
+                                label="Sobrenome"
+                                name="lastName"
+                                variant="filled"
+                            />
                         </div>
                         <InputField 
                             value={this.state.email}
@@ -105,14 +136,13 @@ class Login extends React.Component {
                             display: 'flex',
                             justifyContent: 'center',
                         }}>
-                            <div style={{width: '100px', paddingTop: '15px'}}>
+                            <div style={{width: '150px', paddingTop: '15px'}}>
                                 <Button
                                     variant="contained"
                                     color="purple"
-                                    onClick={this._login}
-                                    width="50px"
+                                    onClick={this._signin}
                                 >
-                                    <span style={{color: 'white'}}>Entrar</span>
+                                    <span style={{color: 'white'}}>Cadastre-se</span>
                                 </Button>
                             </div>
                         </div>
@@ -123,4 +153,4 @@ class Login extends React.Component {
     }
 }
 
-export default withSnackbar(Login);
+export default withSnackbar(Signin);
