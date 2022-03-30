@@ -8,6 +8,7 @@ import Card from "../../Components/Card";
 import { faker } from "@faker-js/faker"
 import TradeModal from "../../Components/TradeModal";
 import { orderApi } from "../../api/orderApi.js";
+import { assetApi } from "../../api/assetApi.js";
 import { withSnackbar } from 'notistack';
 import { reportApi } from "../../api/reportApi.js";
 
@@ -20,6 +21,7 @@ const Asset = ({ match, enqueueSnackbar }) => {
     const [ showTradeModal, setShowTradeModal ] = useState(false);
     const [ orders, setOrders ] = useState(null)
     const [ realizedProfit, setRealizedProfit ] = useState(0)
+    const [ marketCap, setMarketCap ] = useState(0)
 
     const asset = match.params[0];
     
@@ -60,9 +62,24 @@ const Asset = ({ match, enqueueSnackbar }) => {
         }
     }
 
+    const fetchMarketCap = async () => {
+        try {
+            const assets = await assetApi.getAssets()
+
+            console.log(assets)
+
+            setMarketCap(assets.find((curAsset) => curAsset.symbol === asset ).marketCap);
+        } catch (e) {
+            enqueueSnackbar('Erro: ' + e.message, {
+                variant: 'error'
+            })
+        }
+    }
+
     useEffect(() => {
         fetchOrders()
         fetchRealizedProfit()
+        fetchMarketCap()
     }, [])
 
     return (
@@ -81,16 +98,16 @@ const Asset = ({ match, enqueueSnackbar }) => {
                             }
                         </span>
                     </Card>
-                    {/*<Card>
-                        VALOR TOTAL <br />
+                    <Card>
+                        MARKET CAP <br />
                         <span className="asset-values-value">
-                            ${totalValue.toLocaleString(
+                            ${marketCap.toLocaleString(
                                 undefined,
                                 { minimumFractionDigits: 2 }
                                 )
                             }
                         </span>
-                        </Card>*/}
+                        </Card>
                     <button className="asset-trade" onClick={openTradeModal}>
                         <span>Realizar Operação</span>
                     </button>
