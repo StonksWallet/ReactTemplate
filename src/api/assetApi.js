@@ -12,12 +12,12 @@ const getMyAssets = async () => {
 }
 
 const getMostProfitAssets = async () => {
-    const assets = await getRequest(apiUrl + "insights/profit")
+    const assets = await getRequest(apiUrl + "report/insight/profit")
     return assets
 }
 
 const getMostOperationAssets = async () => {
-    const assets = await getRequest(apiUrl + "insights/operations")
+    const assets = await getRequest(apiUrl + "report/insight/operation")
     return assets
 }
 

@@ -2,16 +2,17 @@ import React from "react";
 import "./style.css";
 import Navbar from "../../Components/Navbar";
 import { navUser } from "../../assets/navLists"
-import AssetsList from "../../Components/AssetsList/AssetsList";
+import InsightList from "../../Components/InsightList";
 import { CircularProgress } from "@mui/material";
+import { assetApi } from "../../api/assetApi.js";
 
 class Insights extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            mostProfit: [],
-            mostOperations: [],
+            mostProfit: null,
+            mostOperations: null,
             dataLoaded: false,
         }
     }
@@ -22,52 +23,24 @@ class Insights extends React.Component {
 
     async getData() {
         // TODO: integration with backend
-        await setTimeout(() => {
-            this.setState((state) => ({
-                ...state,
-                mostProfit: [
-                    {
-                        name: "Bitcoin",
-                        symbol: "BTC",
-                        price: 42000,
-                        changePercent: 0.05
-                    },
-                    {
-                        name: "Ethereum",
-                        symbol: "ETH",
-                        price: 3000,
-                        changePercent: 0.09
-                    },
-                    {
-                        name: "Solana",
-                        symbol: "SOL",
-                        price: 95,
-                        changePercent: -0.03
-                    },
-                ],
-                mostOperations: [
-                    {
-                        name: "Bitcoin",
-                        symbol: "BTC",
-                        price: 42000,
-                        changePercent: 0.05
-                    },
-                    {
-                        name: "Ethereum",
-                        symbol: "ETH",
-                        price: 3000,
-                        changePercent: 0.09
-                    },
-                    {
-                        name: "Solana",
-                        symbol: "SOL",
-                        price: 95,
-                        changePercent: -0.03
-                    },
-                ],
-                dataLoaded: true,
-            }))
-        }, 500)
+        let mostProfit = await assetApi.getMostProfitAssets()
+        let mostOperations = await assetApi.getMostOperationAssets()
+        mostProfit = mostProfit.map(a => ({
+            name: a.name,
+            value1: `$ ${parseFloat(a.profit).toLocaleString(
+                undefined,
+                { minimumFractionDigits: 2 }
+            )}`}))
+        mostOperations = mostOperations.map(a => ({
+            name: a.name,
+            value1: a.count,
+        }))
+        this.setState(state => ({
+            ...state,
+            mostProfit,
+            mostOperations,
+            dataLoaded: true
+        }))
     }
 
     render () {
@@ -77,12 +50,12 @@ class Insights extends React.Component {
             <React.Fragment>
                 <Navbar navList={navUser} />
                     <div className="insights-bg">
-                        <AssetsList
+                        <InsightList
                             title="Maior Lucro"
                             assets={mostProfit}
                             dataLoaded={dataLoaded}
                         />
-                        <AssetsList
+                        <InsightList
                             title="Mais Operações"
                             assets={mostOperations}
                             dataLoaded={dataLoaded}

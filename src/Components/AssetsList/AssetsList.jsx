@@ -74,7 +74,7 @@ const AssetsList = ({ title, assets, searchCallback, searchField = false}) => {
                                             )}
                                         </span>
                                         <span style={{
-                                            color: asset.var_24h > 0 ? 'green' : 'red',
+                                            color: asset.changePercent > 0 ? 'green' : 'red',
                                             textAlign: 'center'
                                         }}>
                                             {(parseFloat(asset.changePercent)).toLocaleString(
